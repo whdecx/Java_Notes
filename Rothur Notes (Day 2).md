@@ -85,4 +85,154 @@ This means that large, "fat" interfaces should be split into smaller, more speci
 
 This principle is about decoupling your code. Instead of a high-level class directly creating and depending on a low-level class, both should depend on a shared interface. This allows you to easily swap out the low-level implementation without changing the high-level class.
 
+---
+## In-class Code
+```java
+package org.example;  
+  
+  
+// factory design pattern  
+// paypal, credit card -> payment methods -> pay API  
+// expose checkout API for cross function team  
+// double vs Double -> primitive vs referenced data type ->  8 primitive data type  
+// List<Double> list = new ArraYList();  
+// double d = 2.0; -> Double d1 = new Double (d); -> auto boxing  
+// list.add(d);    -> list.add(d1);  
+// double d = list.get(0);  
+// List<double>  
+  
+  
+// IllegalAccessException -> runtime exception vs compile time exception  
+// extends RuntimeException vs extend Exception  
+// Throwable  
+// Exception vs Error  
+  
+  
+  
+interface Payment {  
+    void pay(double money);  
+}  
+  
+class PayPalPayment implements Payment{  
+    public void pay(double money){  
+        System.out.println("Pay pal");  
+    }  
+}  
+  
+class CreditCardPayment implements Payment{  
+    public void pay(double money){  
+        System.out.println("credit card payment");  
+    }  
+}  
+  
+class PaymentFactory {  
+    public static Payment createPayment(String type)  {  
+        switch(type.toLowerCase()) {  
+            case "paypal": return new PayPalPayment();  
+            case "creditcard": return new CreditCardPayment();  
+            default:  
+                try {  
+                    throw new IllegalAccessException("unknown type" + type);  
+                } catch (IllegalAccessException e) {  
+                    System.out.println(e.getMessage());  
+                    // logger.debug();  
+                    // loger.info();                } finally {  
+  
+                }  
+        }  
+    }  
+}  
+  
+public class PaymentService {  
+    public void checkout(double amount, String paymentType) throws IllegalAccessException {  
+        Payment payment = PaymentFactory.createPayment(paymentType);  
+        payment.pay(amount );  
+  
+    }  
+}
+```
+
+---
+```java
+package org.example.rothur;  
+  
+/**  
+ * // status code ---> HTTP status 100, 200, 300, 400, 500 *                              HR, Sales, Account * Exception status code ----> 101         000 1  --> *                             DEparmetn * *                             HR -> CandadietNotExist 100 *                                   MissCellPhoneInfo 101 *                                   ContractUnSigned  202 *  Exception messages */public class App  
+{  
+    static class Singleton  
+    {  
+        private static Singleton instance;  
+  
+        private Singleton(){  
+  
+        }  
+  
+        public static Singleton getInstance(){  
+            if(instance == null) {  
+                instance = new Singleton();  
+            }  
+            return instance;  
+        }  
+    }  
+  
+    interface Payment {  
+        void pay(double money);  
+    }  
+  
+    class PaypalPayment implements Payment {  
+        public void pay(double money) {  
+            System.out.println("PaypalPayment: " + money);  
+        }  
+    }  
+  
+    class CreditCardPayment implements Payment {  
+        public void pay(double money) {  
+            System.out.println("CreditCardPayment: " + money);  
+        }  
+    }  
+  
+    class PaymentFactory {  
+        public static Payment getPayment(String type) {  
+            if (type.equalsIgnoreCase("paypal")) {  
+                return new PaypalPayment();  
+            } else if (type.equalsIgnoreCase("creditcard")) {  
+                return new CreditCardPayment();  
+            } else {  
+                return null;  
+            }  
+        }  
+    }  
+}  
+  
+  
+/**  
+ *  list: *      - ArrayList *      - LinkedList *      - Vector + Stack * *  Queue: *      - PriorityQueue *          -> Comparator vs Comparable * *      - ArrayDeque vs LinkedList as Deque *      - BlockingQueue * *  Set: *      - Hashset -> Hash Collision -> *      - LinkedHashSet *      - TreeSet<Employee> ? Comparator(sorting age) vs Comparable(sorting ID)  
+ * * *  Map:   ???? *      - HashMap -> HashTable (Deprecated) -> ConcurrentHashMap -> thread safety mechansim *      - LinkedHashMap *      - TreeMap<Key, Value> -> Sorting based on Key  
+ * * *  https://github.com/WeiyuanW/learning_note/blob/main/day%201%20review%20note%20-%20Oct%2014.md * */  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+// 2.35 -> 0.35 ???? -> new BigDecimal("2.3") -> (0.000000001)  
+// 10   -> 10 --> 4 -> (0, 1, 2, 3) && ???? (-2, -1, 0, 1)  
+// 0000...0000
+```
 ## Related

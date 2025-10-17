@@ -42,7 +42,7 @@ interface vs abstract class
 ### Final
 - Scope: field, method, class
 - field: the memory address or primary type cannot be modified after initialization (on creation)
-- method: the method cannot be override
+- method: the method cannot be overriden
 - class: **prevents inheritance:** A `final` class cannot be extended by any other class.
 
 ### Immutable class
@@ -106,4 +106,114 @@ The `throws` keyword is used **in a method signature** to declare the exceptions
 
 ### Map implementation
 
+--- 
+## In-class Code
+```java
+package org.example;  
+class Singleton {  
+    private static final Singleton instance = new Singleton();  
+    private Singleton() {}  
+    public static Singleton getInstance() {  
+        return instance;  
+    }  
+}  
+  
+  
+  
+/*  
+HashMap  
+key1 -> value1  
+key2 -> value2  
+key3 -> value3  
+key4 -> value4  
+key5 -> value5  
+  
+HashSet  
+key1 -> null  
+key2 -> null  
+key3 -> null  
+key4 -> null  
+key5 -> null  
+  
+Employee class into  
+HashMap<Employee, Profile> as key -> case 1  
+or just in HashSet<Employee> -> O(1) -> case 2  
+Set vs Map  
+Key-value map  
+single vluae + deduplicate -> set  
+????  
+hash collision  
+hashcode -> function  
+Employee e1                           unique hash-value  
+input         -> hashcode function -> output  
+Hash Collision???  
+Employee e1 -> hash-value1  
+Employee e2 -> hash-value1  
+             vsNormal update???  
+Employee e1 -> hash-value1  
+Employee e1 -> hash-value1  
+hashcode + equals -> Employee extends Object -> e1.equals(e2) -> euqlas check each and every fields  
+employee -> id, age, name, contactInfo, email, phoneNumber  
+class template (Object) equals -> ==  
+                       key2                         hashvalue1HashMap key1-value1 :  key1 -> hashcode function -> hashvalue1  
+______________________________ Bucket(array)  
+            |            V          value1            |            V          value2            |            V          vluae3            |            V            .... * 1m records O(1) -> O(n)        java 8 -> 8/16 -> linkedlist -> black and red tree data structure  
+  
+  
+  
+     OOP ->  
+     Inheritance -> interface + abstract class + final  
+     Encapsulation, -> access modifier  
+     Polymorphism, -> override vs overload  
+     Abstraction -> interface + abstract class  
+  
+     +  
+     S -> single responsibility     O -> Open/Closed     L -> Loskov principle     I -> Interface segeration     D -> Dependency injection  
+*/
+
+
+package org.example;  
+// public private default protected  
+// default -> protected (default + parent/child access)  
+// object/instance vs template  -> new instantiation  
+// class vs interface vs abstract class vs enum vs annotation (@interface)  
+// class MyClass implmeent interface1, 2, 3 extends AbstractClass  
+// static -> field, method, class, ??? (block)  
+// template -> access elements from template  
+// why?  
+// JVM -> Java Virtual Machine -> type of virtual machine  
+// stack, heap, PC, method area, native method stack  
+// final -> field, method, class                             finalize vs finally  
+// ---> Employee class -> immutable class????  
+// final -> class  
+// private final fields  
+// getter only, no setter  
+// in getter, given referenced data type field, always return deep copy dummies  
+/**  
+ * Profile -> CellPhone, IDCard, *  public final Employee { *      final int age; *      final string name; *      final List<Friend> friends;  
+ *      final Profile * *      // Getter method for age. name, friends *      // no setter *  } *  Employee e1 = new Employee(52, "David", new ArraYLsit()); *  e1.getFriends().add(new Employee("Rogor"XXXXX)); * */// if you put the final keyword on field,  
+// it cannot be changed  
+// Employee e1 = new Employee("David", 52, "male", "Senior SDE");  
+// e1 = new Employee("Kyra", XX, "female", "Senior SDE");  
+  
+// mode? lazy -> eager loading  
+public class Singleton {  
+  //    static {  
+  //        System.out.println("hello world");  //    }  //  //    static class MyStaticClass {  //  //    }  private static Singleton instance;  
+  
+    private Singleton() {  
+    }  
+    public static Singleton getInstance() {  
+        if (instance == null) {  
+            instance = new Singleton();  
+        }  
+        return instance;  
+    }  
+//    String s1 = new String("a");  
+}  
+  
+// override vs overload difference  
+// -> runtime vs compile time polymorphism  
+// in-between classes vs within same class
+```
 ## Related
