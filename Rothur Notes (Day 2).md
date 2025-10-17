@@ -30,7 +30,7 @@ type:
 | **Primary Use Case**  | Used by `Collections.sort(list)` and `Arrays.sort(array)`.                                                                                                 | Passed as an argument to `sort()` methods, e.g., `Collections.sort(list, comparator)`. |
 
 ### Collection
-![[c06899a3fcca6041984c77eeeac70649_MD5.png]]
+![image](c06899a3fcca6041984c77eeeac70649_MD5.png)
 
 #### Comparison among `Set` Implementations
 

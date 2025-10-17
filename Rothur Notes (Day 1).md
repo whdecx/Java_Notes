@@ -102,7 +102,7 @@ The `throws` keyword is used **in a method signature** to declare the exceptions
 - Prove your experience instead recite facts
 
 ### Collection
-![[c06899a3fcca6041984c77eeeac70649_MD5.png]]
+![image](c06899a3fcca6041984c77eeeac70649_MD5.png)
 
 ### Map implementation
 
