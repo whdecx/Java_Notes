@@ -69,6 +69,7 @@ interface vs abstract class
 | **Same Name, Different Param Order**              | **Yes**            | `format(String, int)` vs. `format(int, String)` |
 | **Same Name, Same Params, Different Return Type** | **No (Error)**     | `int add(int,int)` vs. `double add(int,int)`    |
 | **Same Name, Same Params, Different Param Names** | **No (Error)**     | `add(int a, int b)` vs. `add(int x, int y)`     |
+|                                                   |                    |                                                 |
 
 
 ### Factory pattern

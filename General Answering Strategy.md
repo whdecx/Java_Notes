@@ -30,6 +30,7 @@ type:
 - Accurate and **structured** answers
 
 ### Answer template (AI Generated)
+#### 1. Definition
 Start with a crisp, clear definition that shows you understand the core idea.
 > “`<Concept>` is … It’s mainly used to …”
 
@@ -38,7 +39,7 @@ Start with a crisp, clear definition that shows you understand the core idea.
 
 ---
 
-## 2. Purpose / Motivation (Why do we need it?)
+#### 2. Purpose / Motivation (Why do we need it?)
 Explain *why this concept exists* or *what problem it solves*.
 > “The main reason we use `<Concept>` is to … It helps achieve …”
 
@@ -47,7 +48,7 @@ Explain *why this concept exists* or *what problem it solves*.
 
 ---
 
-## 3. Mechanism (How does it work?)
+#### 3. Mechanism (How does it work?)
 Describe the internal logic, process, or mechanism briefly and accurately.  
 If it’s a language construct, describe *when* and *how* it’s triggered.
 > “Under the hood, `<Concept>` works by … It involves …”
@@ -57,7 +58,7 @@ If it’s a language construct, describe *when* and *how* it’s triggered.
 
 ---
 
-## 4. Example (How is it used?)
+#### 4. Example (How is it used?)
 Provide a small code snippet or example to make your answer concrete.
 ```java
 Thread t = new Thread(() -> {
@@ -68,7 +69,7 @@ t.start();
 
 ---
 
-## 5. Trade-offs / Limitations
+#### 5. Trade-offs / Limitations
 Show critical thinking by mentioning drawbacks or caveats.
 > “However, using `<Concept>` has limitations such as …”
 
@@ -77,7 +78,7 @@ Show critical thinking by mentioning drawbacks or caveats.
 
 ---
 
-## 6. Comparison / Related Concepts
+#### 6. Comparison / Related Concepts
 Compare with similar or commonly confused concepts.
 > “Compared to `<Related Concept>`, `<Concept>` is …”
 
@@ -86,7 +87,7 @@ Compare with similar or commonly confused concepts.
 
 ---
 
-## 7. Advanced Notes (Optional)
+#### 7. Advanced Notes (Optional)
 Add JVM-level, version-specific, or performance-related details if relevant.  
 This distinguishes an intermediate from an advanced answer.
 > “Since Java 8, `<change>` … or `JVM` handles `<mechanism>` by …”
