@@ -2,7 +2,7 @@
 aliases: []
 tags:
 created: 2025-10-14
-modified: 2025-10-17
+modified: 2025-10-21
 status:
   - inactive
 type:
@@ -16,7 +16,16 @@ type:
 - Don't spend too much time on non-goals or tangent topics
 - Aim for a minimal viable product first
 
-## Main Content
+
+## JVM memory
+![[Pasted image 20251021183642.png]]
+
+- **Method Area:** Stores class-level information like class name, parent class, methods, variables, and static data. Shared across the JVM.
+- **Heap Area:** Stores all objects. Shared across the JVM.
+- **Stack Area:** Each thread has its own runtime stack; stores method calls, local variables in stack frames. Destroyed when the thread ends.
+- **PC Registers:** Hold the address of the currently executing instruction for each thread.
+- **Native Method Stacks:** Each thread has a separate stack for native method execution.
+
 ### Access modifier: 
 public private  
 default (same package) -> protected (default + parent/child access for subclass outside of the package)
@@ -105,7 +114,6 @@ The `throws` keyword is used **in a method signature** to declare the exceptions
 ### Collection
 ![image](Attachments/c06899a3fcca6041984c77eeeac70649_MD5.png)
 
-### Map implementation
 
 --- 
 ## In-class Code

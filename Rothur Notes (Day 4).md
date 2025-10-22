@@ -2,7 +2,7 @@
 aliases: []
 tags:
 created: 2025-10-17
-modified: 2025-10-20
+modified: 2025-10-21
 status:
   - inactive
 type:
@@ -14,11 +14,11 @@ type:
 
 ## Program, Process, Thread
 
-| **Level**   | **Concept**                        | **Definition**                                                                                                          | **Key Characteristics**                                                                                                           | **Java Context**                                                                       |
-| ----------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| **Program** | Static Code                        | A **passive** set of instructions stored on disk (e.g., `.class`, `.jar`, `.exe`)                                       | - Inactive<br>- Immutable<br>- Includes code, constants, metadata                                                                 | Java `.class` files are **bytecode**, loaded dynamically by **ClassLoader**.           |
-| **Process** | Execution Routine of a Program     | A **running instance** of a program managed by the OS. Owns **private memory space** (heap, stack, PC, etc.).           | - Has its own address space<br>- OS-managed<br>- Can host multiple threads                                                        | The **JVM** itself is a _process_ (e.g., `java.exe` / `java` command).                 |
-| **Thread**  | Unit of Execution within a Process | The **smallest schedulable unit** in the CPU, sharing the process’s memory but with its own **stack + PC + registers**. | - Lightweight<br>- Shares heap with others<br>- Can communicate via shared memory. Use `volatile` for sharing with other threads. | Java `Thread` objects map to **native OS threads** (or **virtual threads** in JDK 21). |
+| **Level**   | **Concept**                                | **Definition**                                                                                                          | **Key Characteristics**                                                                                                           | **Java Context**                                                                       |
+| ----------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **Program** | Static Code                                | A **passive** set of instructions stored on disk (e.g., `.class`, `.jar`, `.exe`)                                       | - Inactive<br>- Immutable<br>- Includes code, constants, metadata                                                                 | Java `.class` files are **bytecode**, loaded dynamically by **ClassLoader**.           |
+| **Process** | An instance of a program in execution      | A **running instance** of a program managed by the OS. Owns **private memory space** (heap, stack, PC, etc.).           | - Has its own address space<br>- OS-managed<br>- Can host multiple threads                                                        | The **JVM** itself is a _process_ (e.g., `java.exe` / `java` command).                 |
+| **Thread**  | Unit of Execution routine within a Process | The **smallest schedulable unit** in the CPU, sharing the process’s memory but with its own **stack + PC + registers**. | - Lightweight<br>- Shares heap with others<br>- Can communicate via shared memory. Use `volatile` for sharing with other threads. | Java `Thread` objects map to **native OS threads** (or **virtual threads** in JDK 21). |
 
 
 When you run a Java program (e.g., executing a `.class` file or a `.jar` file), you initiate a **Java Process** managed by the operating system, but the execution itself is handled by the **Java Virtual Machine (JVM)**.
@@ -47,16 +47,6 @@ The process terminates when the last non-daemon thread finishes execution (usual
 - **JVM Shutdown:** The JVM initiates its shutdown sequence.3 The **Garbage Collector** cleans up any unreachable objects in the Heap.
 - **OS Cleanup:** The OS reclaims the entire memory space and all resources that were owned by the Java Process.
 
-## Summary Table
-
-| **Feature**             | **Program**              | **Process**                                                     | **Thread**                                                                |
-| ----------------------- | ------------------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| **Nature**              | Passive                  | Active                                                          | Active (lightweight)                                                      |
-| **Resource Ownership**  | None (on disk)           | Owns dedicated, isolated resources (Memory, Files, etc.)        | Shares resources with other threads in the same process.                  |
-| **Switching Overhead**  | High (loading from disk) | High (Context switch requires saving/loading entire memory map) | Low (Context switch only requires saving/loading CPU registers and stack) |
-| **Minimum Requirement** | N/A                      | Requires at least one thread.                                   | Must belong to a process.                                                 |
-| **Analogy**             | The Recipe Book          | The Running Kitchen (Memory, Resources)                         | The Chef's Hands (Sequence of Execution)                                  |
-
 ## Thread Lifecycles
 | **State**             | **Description**                                                           | **Triggered By**                                                       |
 | --------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
@@ -69,7 +59,7 @@ The process terminates when the last non-daemon thread finishes execution (usual
 
 ### Run v.s. Start
 
-| **run()**               | **start()**                                                 |                                                            |
+|                         | **run()**                                                   | **start()**<br>                                            |
 | ----------------------- | ----------------------------------------------------------- | ---------------------------------------------------------- |
 | **What it does**        | Executes the code in the current thread.                    | Creates a new OS-level thread and calls `run()` inside it. |
 | **Creates new thread?** | ❌ No                                                        | ✅ Yes                                                      |
@@ -122,6 +112,8 @@ Executor → ExecutorService → ThreadPoolExecutor
              Executors (factory methods)
 ```
 
+### Execution flow for a new task
+
 | Step  | Condition                           | Action                                                          |
 | ----- | ----------------------------------- | --------------------------------------------------------------- |
 | **①** | If current threads < `corePoolSize` | Create a **new worker thread**, run the task immediately        |
@@ -129,13 +121,13 @@ Executor → ExecutorService → ThreadPoolExecutor
 | **③** | Else if threads < `maximumPoolSize` | Create a **new thread (beyond core)** to handle the overload    |
 | **④** | Else (queue full, max reached)      | **Reject** task → call `RejectedExecutionHandler`               |
 
-|Queue Type|Behavior|
-|---|---|
-|`SynchronousQueue`|No buffer — tasks handed directly to threads. Pool grows fast under load.|
-|`LinkedBlockingQueue`|Potentially unbounded. Pool won’t grow past `corePoolSize`; queue grows instead.|
-|`ArrayBlockingQueue`|Bounded, fixed-capacity. Pool grows and rejects properly under pressure.|
-|`PriorityBlockingQueue`|Ordered by priority, not FIFO.|
-|`DelayQueue`|For delayed/scheduled tasks.|
+| Queue Type              | Behavior                                                                         |
+| ----------------------- | -------------------------------------------------------------------------------- |
+| `SynchronousQueue`      | No buffer — tasks handed directly to threads. Pool grows fast under load.        |
+| `LinkedBlockingQueue`   | Potentially unbounded. Pool won’t grow past `corePoolSize`; queue grows instead. |
+| `ArrayBlockingQueue`    | Bounded, fixed-capacity. Pool grows and rejects properly under pressure.         |
+| `PriorityBlockingQueue` | Ordered by priority, not FIFO.                                                   |
+| `DelayQueue`            | For delayed/scheduled tasks.                                                     |
 
 ### **Rejection Handling**
 
