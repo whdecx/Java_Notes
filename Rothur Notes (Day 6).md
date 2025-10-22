@@ -46,11 +46,28 @@ public class Singleton {
 ### What can go wrong
 Imagine two threads:
 
-|Thread A|Thread B|
-|---|---|
-|enters `getInstance()`|calls `getInstance()`|
-|passes 1st `if (instance == null)`|sees `instance != null` (because of step 3 reordered before step 2)|
-|starts constructing Singleton|returns a _partially constructed_ object ❌|
+When you do:
+`instance = new Singleton();`
+this is **not a single atomic action**. It conceptually involves three steps:
+
+|Step|Operation|Meaning|
+|---|---|---|
+|(1)|Allocate memory for Singleton|Reserve space in heap|
+|(2)|Initialize the object|Run constructor (`Singleton()` body)|
+|(3)|Set `instance` to point to that memory|Assign reference to variable|
+
+The **JVM and CPU are allowed to reorder (2) and (3)** for optimization!  
+So it might actually happen as:
+
+1 allocate memory 
+3 assign instance reference  ← published early! 
+2 initialize object
+
+| Thread A                           | Thread B                                                            |
+| ---------------------------------- | ------------------------------------------------------------------- |
+| enters `getInstance()`             | calls `getInstance()`                                               |
+| passes 1st `if (instance == null)` | sees `instance != null` (because of step 3 reordered before step 2) |
+| starts constructing Singleton      | returns a _partially constructed_ object ❌                          |
 
 That means `Thread B` could get an **incompletely initialized object**, where fields are still default values (null/0).
 
